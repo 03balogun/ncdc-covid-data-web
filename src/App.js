@@ -1,25 +1,30 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, {useState} from 'react';
+import ThemeProvider from "@chakra-ui/core/dist/ThemeProvider";
+import ColorModeProvider from "@chakra-ui/core/dist/ColorModeProvider";
+import CSSReset from "@chakra-ui/core/dist/CSSReset";
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import StateContext from './context/StateContext'
+
+// pages
+import Index from './pages/Index';
 
 function App() {
+    const stateHook = useState('');
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      <StateContext.Provider value={stateHook}>
+          <ThemeProvider>
+              <ColorModeProvider>
+                  <CSSReset />
+                  <Router>
+                      <Switch>
+                          <Route exact path="/">
+                              <Index/>
+                          </Route>
+                      </Switch>
+                  </Router>
+              </ColorModeProvider>
+          </ThemeProvider>
+      </StateContext.Provider>
   );
 }
 

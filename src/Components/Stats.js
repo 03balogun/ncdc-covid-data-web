@@ -1,0 +1,131 @@
+import React, {useMemo} from "react";
+import PropTypes from 'prop-types';
+import Skeleton from "@chakra-ui/core/dist/Skeleton";
+import Flex from "@chakra-ui/core/dist/Flex";
+import {formatDate} from '../utils/helper';
+
+import {
+    Stat,
+    StatLabel,
+    StatNumber,
+    StatArrow,
+    StatGroup,
+} from "@chakra-ui/core/dist/Stat";
+import {Box} from "@chakra-ui/core";
+import {Text} from "@chakra-ui/core/dist";
+
+const percentageDifference = (newFigure, oldFigure) => {
+    if (!oldFigure) return 100;
+    const diff = newFigure - oldFigure;
+    const result = diff / oldFigure * 100;
+    return !isNaN(result) ? Math.abs(result).toFixed(1) : 0;
+};
+
+const Stats = ({isFetchingSeries, latestReport, previousDayReport}) => {
+
+    const METRICS = useMemo(() => {
+        // Calculate the differences between the latest and previous day report
+        const {
+            total_confirmed_cases,
+            total_active_cases,
+            total_discharged,
+            total_deaths,
+            new_confirmed_cases,
+            new_deaths,
+            new_discharged
+        } = latestReport;
+
+        const previousNewConfirmedCases = previousDayReport.new_confirmed_cases || 0;
+        const previousTotalActive = previousDayReport.total_active_cases || 0;
+        const previousNewDischarged = previousDayReport.new_discharged || 0;
+        const previousNewDeath = previousDayReport.new_deaths || 0;
+
+        return [
+            {
+                title: 'CONFIRMED CASES',
+                color: 'red.400',
+                figure: total_confirmed_cases,
+                currentFigure: new_confirmed_cases ?? 0,
+                previousFigure: previousNewConfirmedCases,
+                isIncrease: new_confirmed_cases > previousNewConfirmedCases,
+                percentage: percentageDifference(new_confirmed_cases, previousNewConfirmedCases)
+            },
+            {
+                title: 'ACTIVE CASES',
+                color: 'orange.400',
+                figure: total_active_cases,
+                currentFigure: total_active_cases ?? 0,
+                previousFigure: previousTotalActive,
+                isIncrease: total_active_cases > previousTotalActive,
+                percentage: percentageDifference(total_active_cases, previousTotalActive)
+            },
+            {
+                title: 'RECOVERED CASES',
+                color: 'green.400',
+                figure: total_discharged,
+                currentFigure: new_discharged ?? 0,
+                previousFigure: previousNewDischarged,
+                isIncrease: new_discharged > previousNewDischarged,
+                percentage: percentageDifference(new_discharged, previousNewDischarged)
+            },
+            {
+                title: 'DEATHS CASES',
+                color: 'blue.400',
+                figure: total_deaths,
+                currentFigure: new_deaths ?? 0,
+                previousFigure: previousNewDeath,
+                isIncrease: new_deaths > previousNewDeath,
+                percentage: percentageDifference(new_deaths, previousNewDeath)
+            }
+        ]
+    }, [latestReport, previousDayReport]);
+
+    return (
+        <StatGroup w="100%" wrap="wrap" justifyContent="space-between">
+            {
+                METRICS.map((metric, index) => (
+                    <Stat flex={['100%', '0 0 24%']} key={index} m={['10px', '0']} rounded="md" borderWidth="1px" p={4}>
+                        <StatLabel color={metric.color}>{metric.title}</StatLabel>
+                        <Skeleton isLoaded={!isFetchingSeries}>
+                            <Flex justifyContent="space-between" mt={2} width="100%">
+                                <Box>
+                                    <Text fontSize="xs">Cumulative</Text>
+                                    <StatNumber>{metric.figure}</StatNumber>
+                                </Box>
+                                <Flex justifyContent="center" direction="column">
+                                    <Text fontSize="xs">
+                                        {formatDate(latestReport._id, 'D MMM')}
+                                    </Text>
+                                    <Flex justifyContent="center" mb={0} alignItems="center">
+                                        <StatNumber fontSize="1.1rem">{metric.currentFigure}</StatNumber>
+                                        <Text fontSize="0.7rem" ml={1}>
+                                            <StatArrow size="0.5rem"
+                                                       type={metric.isIncrease ? 'increase' : 'decrease'}/>
+                                            <span>{metric.percentage ?? 0}%</span>
+                                        </Text>
+                                    </Flex>
+                                </Flex>
+                                <Flex justifyContent="center" direction="column">
+                                    <Text fontSize="xs">
+                                        {formatDate(previousDayReport._id, 'D MMM')}
+                                    </Text>
+                                    <Flex justifyContent="center" mb={0} alignItems="center">
+                                        <StatNumber fontSize="1.1rem">{metric.previousFigure}</StatNumber>
+                                    </Flex>
+                                </Flex>
+                            </Flex>
+                        </Skeleton>
+                    </Stat>
+                ))
+            }
+        </StatGroup>
+    )
+};
+
+Stats.propTypes = {
+    isFetchingSeries: PropTypes.bool.isRequired,
+    latestReport: PropTypes.object.isRequired,
+    previousDayReport: PropTypes.object.isRequired,
+};
+
+export default Stats

@@ -1,0 +1,19 @@
+#column-total_active_cases{
+    color: #ED8936;
+}
+
+#column-total_discharged{
+    color: #48bb78;
+}
+
+#column-total_confirmed_cases{
+    color: #f56565;
+}
+
+#column-total_deaths{
+    color: #4299e1;
+}
+
+header.sc-fzoXzr{
+    padding: 0;
+}
