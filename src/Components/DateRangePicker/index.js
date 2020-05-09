@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import DatePicker from 'react-datepicker';
 import Box from "@chakra-ui/core/dist/Box";
 import Flex from "@chakra-ui/core/dist/Flex";
+import IconButton from "@chakra-ui/core/dist/IconButton";
 import CustomInput from './CustomInput';
 
 import "react-datepicker/dist/react-datepicker.css";
@@ -11,8 +12,13 @@ export default () => {
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
 
+    const clearDate = () => {
+        setStartDate('');
+        setEndDate('')
+    };
+
     return (
-        <Flex>
+        <Flex alignItems="flex-end">
             <Box mr={4}>
                 <label htmlFor="From">Filter by date:</label><br/>
                 <DatePicker
@@ -36,6 +42,7 @@ export default () => {
                     customInput={<CustomInput id="to" label="To" />}
                 />
             </Box>
+            <IconButton ml={2} icon="close" aria-label="Clear date" fontSize={14} type="button" onClick={clearDate} />
         </Flex>
     )
 }
