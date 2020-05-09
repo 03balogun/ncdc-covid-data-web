@@ -31,6 +31,7 @@ function Index() {
     const [chartOneSeries, setChartOneSeries] = useState([]);
     const [chartTwoSeries, setChartTwoSeries] = useState([]);
     const [reportDate, setReportDate] = useState('--');
+    const [firstReportDate, setFirstReportDate] = useState('--');
     const [latestReport, setLatestReport] = useState({});
     const [previousDayReport, setPreviousDayReport] = useState({});
 
@@ -51,6 +52,7 @@ function Index() {
             const previousDayReport = records[1] ?? {};
 
             setReportDate(latestReport._id);
+            setFirstReportDate(records[records.length -1 ]._id);
             setLatestReport(latestReport);
             setPreviousDayReport(previousDayReport);
 
@@ -104,7 +106,7 @@ function Index() {
                                     <Text as="strong" textTransform="uppercase">
                                         &nbsp;{selectedState || 'All'}
                                     </Text>
-                                    &nbsp;Date <strong>{formatDate(reportDate)}</strong>
+                                    &nbsp;from <strong>{formatDate(firstReportDate)}</strong> to <strong>{formatDate(reportDate)}</strong>
                                 </Text>
                             </Skeleton>
                             <DateRangePicker/>

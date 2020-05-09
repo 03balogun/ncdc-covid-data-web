@@ -17,9 +17,7 @@ import './index.css';
 
 const percentageDifference = (newFigure, oldFigure) => {
     if (!oldFigure) return 100;
-    const diff = newFigure - oldFigure;
-    const result = diff / oldFigure * 100;
-    return !isNaN(result) ? Math.abs(result).toFixed(1) : 0;
+    return (((newFigure - oldFigure) / oldFigure) * 100).toFixed(2);
 };
 
 const Index = ({isFetchingSeries, latestReport, previousDayReport}) => {
