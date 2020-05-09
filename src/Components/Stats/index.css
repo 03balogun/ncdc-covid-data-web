@@ -1,0 +1,20 @@
+.stat-container {
+    flex: 100% !important;
+    margin-bottom: 10px !important;
+}
+
+@media screen and (min-width: 40em) {
+    .stat-container {
+        flex: 40% !important;
+    }
+    .stat-container:nth-child(odd){
+        margin-right: 10px !important;
+    }
+}
+
+@media screen and (min-width: 100em) {
+    .stat-container {
+        flex: 0 0 24% !important;
+        margin-bottom: 0 !important;
+    }
+}

@@ -14,65 +14,37 @@ import Footer from "../../Components/Footer";
 import Chart from "../../Components/Chart";
 import DataTable from "../../Components/DataTable";
 
-import chartConfig from '../../config/charts';
+import chart1 from '../../config/chart1';
+import chart2 from "../../config/chart2";
 
 import api from '../../services/api';
 import {formatDate} from '../../utils/helper';
 
 import StateContext from '../../context/StateContext'
 
-const barChartConfig = {
-    ...chartConfig,
-    chart: {
-        ...chartConfig.chart,
-        id: 'chart2',
-        "toolbar": {
-            "autoSelected": "zoom",
-            "tools": {
-                "download": false
-            }
-        },
-        dropShadow: {
-            enabled: false,
-        },
-        // selection: {
-        //     xaxis: {
-        //         min: new Date('26 Apr 2020').getTime(),
-        //         max: new Date('1 May 2020').getTime()
-        //     }
-        // },
-    },
-    "title": {
-        "text": "COVID-19 Timeline in Nigeria",
-        "align": "left"
-    },
-    "subtitle": {
-        "text": "Recorded cases each day since the first case was reported.\n Select a state from the left to filter by state"
-    },
-    colors: ["#f56565", "#48bb78", "#4299e1"],
-};
-
-console.log(barChartConfig);
+import './index.css';
 
 function Index() {
     const toast = useToast();
 
     const [isFetchingSeries, setIsFetchingSeries] = useState(true);
-    const [series, setSeries] = useState([]);
-    const [barChartSeries, setBarChartSeries] = useState([]);
+    const [chartOneSeries, setChartOneSeries] = useState([]);
+    const [chartTwoSeries, setChartTwoSeries] = useState([]);
     const [reportDate, setReportDate] = useState('--');
     const [latestReport, setLatestReport] = useState({});
     const [previousDayReport, setPreviousDayReport] = useState({});
 
     const [selectedState] = useContext(StateContext);
 
-    const fetchChartSeries = (state = '') => {
+    const fetchChartSeries = async (state = '') => {
         setIsFetchingSeries(true);
-        api.fetchMetricsGroupByDate(state).then(({series, categories, records, barChartSeries}) => {
-            chartConfig.xaxis.categories = categories;
-            barChartConfig.xaxis.categories = categories;
-            setSeries(series);
-            setBarChartSeries(barChartSeries);
+        try {
+            const {chartOneSeries, categories, records, chartTwoSeries} = await api.fetchMetricsGroupByDate(state);
+
+            chart1.xaxis.categories = categories;
+            chart2.xaxis.categories = categories;
+            setChartOneSeries(chartOneSeries);
+            setChartTwoSeries(chartTwoSeries);
 
             const latestReport = records[0] ?? {};
             // Get previous day report
@@ -81,7 +53,8 @@ function Index() {
             setReportDate(latestReport._id);
             setLatestReport(latestReport);
             setPreviousDayReport(previousDayReport);
-        }).catch(() => {
+
+        }catch (e) {
             toast({
                 title: "Error",
                 description: "An error occurred please refresh your page and try again. If error persist, kindly report.",
@@ -89,10 +62,8 @@ function Index() {
                 duration: 9000,
                 isClosable: true,
             })
-        }).finally(() => {
-            setIsFetchingSeries(false);
-        });
-
+        }
+        setIsFetchingSeries(false);
     };
 
     useEffect(() =>{
@@ -102,15 +73,29 @@ function Index() {
     return (
         <Box wrap="wrap">
             <Header />
-            <Box display={['block', 'flex']}
+            <Box
                  as="main"
-                 wrap="wrap"
-                 flex="100%"
-                 justifyContent="space-between"
                  mt="4rem"
-                 mb={['4rem', 0]}
+                 width="100%"
                  p={4}>
-                <Flex direction="column" justifyContent="space-between" flex={['100%', '0 0 80%', '0 0 70%']}>
+                <Box
+                    position="fixed"
+                    width="100%"
+                    height="100%"
+                    top="1rem"
+                    left="0"
+                    right="0"
+                    className="rightSection"
+                >
+                    <Box
+                        top="4rem"
+                        position="relative"
+                        overflow-y="auto"
+                        border-right-width="1px">
+                        <DataTable/>
+                    </Box>
+                </Box>
+                <Box paddingTop="2rem" className="leftSection">
                     <Flex direction="column" w="100%">
                         <Flex justifyContent="space-between" wrap="wrap" alignItems="flex-end" mb={4}>
                             <Skeleton isLoaded={!isFetchingSeries}>
@@ -158,13 +143,14 @@ function Index() {
                                         <TabPanel>
                                             <Box borderWidth={1} w="100%" p={4}>
                                                 <Chart type="line" width="100%" height={500}
-                                                       series={barChartSeries}
-                                                       options={barChartConfig}/>
+                                                       series={chartTwoSeries}
+                                                       options={chart2}/>
                                             </Box>
                                         </TabPanel>
                                         <TabPanel>
                                             <Box borderWidth={1} w="100%" p={4}>
-                                                <Chart type="line" width="100%" height={500} series={series} options={chartConfig}/>
+                                                <Chart type="line" width="100%" height={500} series={chartOneSeries}
+                                                       options={chart1}/>
                                             </Box>
                                         </TabPanel>
                                     </TabPanels>
@@ -172,13 +158,10 @@ function Index() {
                             </Box>
                         )}
                     </Flex>
-                    <Box display={['none', 'block']}>
-                        <Footer />
-                    </Box>
-                </Flex>
-                <Flex flex={['100%', '0 0 20%', '0 0 25%']} mt={[8, 0]}>
-                    <DataTable/>
-                </Flex>
+                    {/*<Box display={['none', 'block']}>*/}
+                    {/*    <Footer />*/}
+                    {/*</Box>*/}
+                </Box>
             </Box>
             <Box display={['block', 'none']}>
                 <Footer />

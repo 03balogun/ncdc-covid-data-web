@@ -2,8 +2,8 @@ import React, {useMemo} from "react";
 import PropTypes from 'prop-types';
 import Skeleton from "@chakra-ui/core/dist/Skeleton";
 import Flex from "@chakra-ui/core/dist/Flex";
-import {formatDate} from '../utils/helper';
-
+import {Box} from "@chakra-ui/core";
+import {Text} from "@chakra-ui/core/dist";
 import {
     Stat,
     StatLabel,
@@ -11,8 +11,9 @@ import {
     StatArrow,
     StatGroup,
 } from "@chakra-ui/core/dist/Stat";
-import {Box} from "@chakra-ui/core";
-import {Text} from "@chakra-ui/core/dist";
+import {formatDate} from '../../utils/helper';
+
+import './index.css';
 
 const percentageDifference = (newFigure, oldFigure) => {
     if (!oldFigure) return 100;
@@ -21,7 +22,7 @@ const percentageDifference = (newFigure, oldFigure) => {
     return !isNaN(result) ? Math.abs(result).toFixed(1) : 0;
 };
 
-const Stats = ({isFetchingSeries, latestReport, previousDayReport}) => {
+const Index = ({isFetchingSeries, latestReport, previousDayReport}) => {
 
     const METRICS = useMemo(() => {
         // Calculate the differences between the latest and previous day report
@@ -84,7 +85,7 @@ const Stats = ({isFetchingSeries, latestReport, previousDayReport}) => {
         <StatGroup w="100%" wrap="wrap" justifyContent="space-between">
             {
                 METRICS.map((metric, index) => (
-                    <Stat flex={['100%', '0 0 24%']} key={index} m={['10px', '0']} rounded="md" borderWidth="1px" p={4}>
+                    <Stat className="stat-container" key={index} mb={['10px', '0']} rounded="md" borderWidth="1px" p={4}>
                         <StatLabel color={metric.color}>{metric.title}</StatLabel>
                         <Skeleton isLoaded={!isFetchingSeries}>
                             <Flex justifyContent="space-between" mt={2} width="100%">
@@ -94,7 +95,7 @@ const Stats = ({isFetchingSeries, latestReport, previousDayReport}) => {
                                 </Box>
                                 <Flex justifyContent="center" direction="column">
                                     <Text fontSize="xs">
-                                        {formatDate(latestReport._id, 'D MMM')}
+                                        {formatDate(latestReport._id)}
                                     </Text>
                                     <Flex justifyContent="center" mb={0} alignItems="center">
                                         <StatNumber fontSize="1.1rem">{metric.currentFigure}</StatNumber>
@@ -107,7 +108,7 @@ const Stats = ({isFetchingSeries, latestReport, previousDayReport}) => {
                                 </Flex>
                                 <Flex justifyContent="center" direction="column">
                                     <Text fontSize="xs">
-                                        {formatDate(previousDayReport._id, 'D MMM')}
+                                        {formatDate(previousDayReport._id)}
                                     </Text>
                                     <Flex justifyContent="center" mb={0} alignItems="center">
                                         <StatNumber fontSize="1.1rem">{metric.previousFigure}</StatNumber>
@@ -122,10 +123,10 @@ const Stats = ({isFetchingSeries, latestReport, previousDayReport}) => {
     )
 };
 
-Stats.propTypes = {
+Index.propTypes = {
     isFetchingSeries: PropTypes.bool.isRequired,
     latestReport: PropTypes.object.isRequired,
     previousDayReport: PropTypes.object.isRequired,
 };
 
-export default Stats
+export default Index

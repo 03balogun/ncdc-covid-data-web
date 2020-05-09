@@ -1,10 +1,33 @@
+.rightSection{
+    display: none !important;
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+}
 
-/*.stat{*/
-/*    width: 20%;*/
-/*}*/
+.leftSection{
+    max-width: 100% !important;
+}
 
-/*@media (max-width: 768px) {*/
-/*    .stat{*/
-/*        width: 50%;*/
-/*    }*/
-/*}*/
+@media screen and (min-width: 40em) {
+    .rightSection{
+        max-width: 35%;
+        display: block !important;
+    }
+
+    .leftSection{
+        max-width: 65% !important;
+        margin-left: 35%;
+    }
+}
+
+@media screen and (min-width: 100em) {
+    .rightSection{
+        max-width: 30%;
+        display: block !important;
+    }
+
+    .leftSection{
+        max-width: 70% !important;
+        margin-left: 30%;
+    }
+}
