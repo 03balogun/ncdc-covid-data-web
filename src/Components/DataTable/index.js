@@ -1,5 +1,6 @@
 import React, {useState, useMemo, useEffect, useContext} from "react";
-import DTable, {createTheme} from 'react-data-table-component';
+import PropTypes from "prop-types";
+import DTable from 'react-data-table-component';
 import Spinner from "@chakra-ui/core/dist/Spinner";
 import useToast from "@chakra-ui/core/dist/es/Toast";
 import {Box} from "@chakra-ui/core";
@@ -9,80 +10,15 @@ import {InputRightElement} from "@chakra-ui/core/dist";
 import IconButton from "@chakra-ui/core/dist/IconButton";
 import {useColorMode} from "@chakra-ui/core/dist/ColorModeProvider";
 
+import {columns, customStyles} from './config';
+
 import StateContext from '../../context/StateContext'
 
 import api from '../../services/api';
 
 import './index.css'
 
-const columns = [
-    {
-        name: 'State',
-        selector: 'state',
-        sortable: true,
-        wrap: true,
-        style: {
-            textTransform: 'capitalize'
-        }
-    },
-    {
-        name: 'Confirmed',
-        selector: 'total_confirmed_cases',
-        sortable: true,
-        right: true,
-    },
-    {
-        name: 'Active',
-        selector: 'total_active_cases',
-        sortable: true,
-        right: true,
-    },
-    {
-        name: 'Recovered',
-        selector: 'total_discharged',
-        sortable: true,
-        right: true,
-    },
-    {
-        name: 'Death',
-        selector: 'total_deaths',
-        sortable: true,
-        right: true,
-    },
-];
-
-const customStyles = {
-    headCells: {
-        style: {
-            textTransform: 'uppercase',
-            fontWeight: 'bold'
-        }
-    }
-};
-
-createTheme('solarized', {
-    text: {
-        primary: '#268bd2',
-        secondary: '#ccc',
-    },
-    background: {
-        default: '#1a212c',
-    },
-    context: {
-        background: '#cb4b16',
-        text: '#FFFFFF',
-    },
-    divider: {
-        default: '#073642',
-    },
-    action: {
-        button: 'rgba(0,0,0,.54)',
-        hover: 'rgba(0,0,0,.08)',
-        disabled: 'rgba(0,0,0,.12)',
-    },
-});
-
-const DataTable = () => {
+const DataTable = ({onToggle}) => {
     const toast = useToast();
     const [isLoading, setLoading] = useState(true);
     const [filterText, setFilterText] = useState('');
@@ -146,7 +82,7 @@ const DataTable = () => {
             subHeader
             fixedHeader={filteredItems.length > 20}
             fixedHeaderScrollHeight="calc(100vh - 14rem)"
-            striped={true}
+            striped={colorMode === 'light'}
             progressPending={isLoading}
             progressComponent={    <Spinner
                 alingSelf="center"
@@ -160,13 +96,21 @@ const DataTable = () => {
             highlightOnHover={true}
             pointerOnHover={true}
             noHeader={true}
-            onRowClicked={(args)=>setSelectedSate(args.state)}
+            onRowClicked={(args)=>{
+                setSelectedSate(args.state);
+                // close the side menu when a state is selected
+                if (onToggle) onToggle();
+            }}
             customStyles={customStyles}
             defaultSortField="total_confirmed_cases"
             defaultSortAsc={false}
             theme={colorMode !== 'light' ? 'solarized' : ''}
         />
     )
+};
+
+DataTable.propTypes = {
+    onToggle: PropTypes.func,
 };
 
 export default DataTable;

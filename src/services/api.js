@@ -22,7 +22,7 @@ export default {
                     data: records.map(record => record.total_discharged ?? 0)
                 },
                 {
-                    name: 'Deaths',
+                    name: 'Death',
                     data: records.map(record => record.total_deaths ?? 0)
                 }
             ];
@@ -46,7 +46,7 @@ export default {
                     })
                 },
                 {
-                    name: 'Deaths',
+                    name: 'Death',
                     data: records.map((record, index) => {
                         return (index !== (records.length - 1))
                             ? record.new_deaths

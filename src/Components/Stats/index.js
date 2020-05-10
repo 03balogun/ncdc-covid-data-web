@@ -17,7 +17,7 @@ import './index.css';
 
 const percentageDifference = (newFigure, oldFigure) => {
     if (!oldFigure) return 100;
-    return (((newFigure - oldFigure) / oldFigure) * 100).toFixed(2);
+    return (((newFigure - oldFigure) / oldFigure) * 100).toFixed(1);
 };
 
 const Index = ({isFetchingSeries, latestReport, previousDayReport}) => {
@@ -68,7 +68,7 @@ const Index = ({isFetchingSeries, latestReport, previousDayReport}) => {
                 percentage: percentageDifference(new_discharged, previousNewDischarged)
             },
             {
-                title: 'DEATHS CASES',
+                title: 'DEATH CASES',
                 color: 'blue.400',
                 figure: total_deaths,
                 currentFigure: new_deaths ?? 0,

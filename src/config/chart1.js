@@ -53,7 +53,7 @@ export default {
     offsetY: 10
   },
   tooltip: {},
-  //theme": {
-  //   mode": "dark"
-  // },
+  theme: {
+    mode: "light"
+  },
 }

@@ -23,9 +23,20 @@ import {formatDate} from '../../utils/helper';
 import StateContext from '../../context/StateContext'
 
 import './index.css';
+import {useColorMode, useDisclosure} from "@chakra-ui/core/dist";
+import SideDrawer from "../../Components/SideDrawer";
 
 function Index() {
     const toast = useToast();
+    const { colorMode } = useColorMode();
+    // TODO refactor this by using the chart's method to update options
+    if(colorMode === 'light'){
+        chart1.theme.mode = "light";
+        chart2.theme.mode = "light";
+    }else {
+        chart1.theme.mode = "dark";
+        chart2.theme.mode = "dark";
+    }
 
     const [isFetchingSeries, setIsFetchingSeries] = useState(true);
     const [chartOneSeries, setChartOneSeries] = useState([]);
@@ -36,6 +47,8 @@ function Index() {
     const [previousDayReport, setPreviousDayReport] = useState({});
 
     const [selectedState] = useContext(StateContext);
+    const { isOpen, onToggle } = useDisclosure();
+
 
     const fetchChartSeries = async (state = '') => {
         setIsFetchingSeries(true);
@@ -74,7 +87,7 @@ function Index() {
 
     return (
         <Box wrap="wrap">
-            <Header />
+            <Header onToggle={onToggle} />
             <Box
                  as="main"
                  mt="4rem"
@@ -94,7 +107,7 @@ function Index() {
                         position="relative"
                         overflow-y="auto"
                         border-right-width="1px">
-                        <DataTable/>
+                        <DataTable />
                     </Box>
                 </Box>
                 <Box paddingTop="2rem" className="leftSection">
@@ -160,14 +173,15 @@ function Index() {
                             </Box>
                         )}
                     </Flex>
-                    {/*<Box display={['none', 'block']}>*/}
-                    {/*    <Footer />*/}
-                    {/*</Box>*/}
+                    <Flex display={['none', 'flex']} w="100%" justifySelf="flex-end">
+                        <Footer />
+                    </Flex>
                 </Box>
             </Box>
             <Box display={['block', 'none']}>
                 <Footer />
             </Box>
+            <SideDrawer isOpen={isOpen} onToggle={onToggle} />
         </Box>
     );
 }

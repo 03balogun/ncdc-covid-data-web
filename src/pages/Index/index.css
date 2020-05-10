@@ -10,13 +10,13 @@
 
 @media screen and (min-width: 40em) {
     .rightSection{
-        max-width: 35%;
+        max-width: 38%;
         display: block !important;
     }
 
     .leftSection{
-        max-width: 65% !important;
-        margin-left: 35%;
+        max-width: 62% !important;
+        margin-left: 38%;
     }
 }
 
