@@ -5,6 +5,9 @@ import Box from "@chakra-ui/core/dist/Box";
 import Text from "@chakra-ui/core/dist/Text";
 import Spinner from "@chakra-ui/core/dist/Spinner";
 import Skeleton from "@chakra-ui/core/dist/Skeleton";
+import useDisclosure from "@chakra-ui/core/dist/useDisclosure";
+import {useColorMode} from "@chakra-ui/core/dist/ColorModeProvider";
+
 import Tabs, { TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/core/dist/Tabs";
 
 import DateRangePicker from "../../Components/DateRangePicker";
@@ -23,7 +26,6 @@ import {formatDate} from '../../utils/helper';
 import StateContext from '../../context/StateContext'
 
 import './index.css';
-import {useColorMode, useDisclosure} from "@chakra-ui/core/dist";
 import SideDrawer from "../../Components/SideDrawer";
 
 function Index() {
