@@ -12,7 +12,7 @@ const SideDrawer = ({onToggle, isOpen}) => {
                 <DrawerHeader borderBottomWidth="1px">
                     State Figures <DrawerCloseButton />
                 </DrawerHeader>
-                <DrawerBody>
+                <DrawerBody p={0}>
                     <DataTable onToggle={onToggle} />
                 </DrawerBody>
             </DrawerContent>

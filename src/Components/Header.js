@@ -15,7 +15,7 @@ const Header = ({onToggle}) => {
     const { colorMode, toggleColorMode } = useColorMode();
     const { isOpen, onOpen, onClose } = useDisclosure();
 
-    const isNight = colorMode === 'light';
+    const isNight = colorMode === 'dark';
 
     return (
         <>
@@ -25,7 +25,7 @@ const Header = ({onToggle}) => {
                  left={0}
                  right={0}
                  zIndex={999}
-                 bg={isNight ? 'white' : 'rgb(26, 32, 44);'}
+                 bg={isNight ? 'rgb(26, 32, 44)' : 'white'}
                  p={4}
                  justifyContent="flex-end"
                  h="4rem"
@@ -43,21 +43,21 @@ const Header = ({onToggle}) => {
                         </Tooltip>
                         <Tooltip aria-label="Goto project github Repository" placement="bottom"
                                  label="Goto project github Repository">
-                            <IconButton as="a" href="#" variant="ghost"
+                            <IconButton as="a" isExternal href="https://github.com/03balogun/ncdc-covid-data-web" variant="ghost"
                                         color="gray.500"
                                         aria-label="Switch to night mood"
                                         icon={FaGithub}/>
                         </Tooltip>
-                        <Tooltip aria-label={`Switch to ${isNight ? 'dark' : 'day'} mode`} placement="bottom"
+                        <Tooltip aria-label={`Switch to ${isNight ? 'day' : 'dark'} mode`} placement="bottom"
                                  label="Switch to night mode">
                             <IconButton onClick={toggleColorMode} variant="ghost"
                                         color="gray.500"
                                         aria-label="Switch to night mood"
                                         icon={colorMode === 'light' ? 'moon' : 'sun'}/>
                         </Tooltip>
-                        <Tooltip aria-label="Open side menu to filter by state" placement="bottom"
+                        <Tooltip display={['flex', 'none']} aria-label="Open side menu to filter by state" placement="bottom"
                                  label="Toggle Side menu">
-                            <IconButton display={['flex', 'none']} onClick={onToggle} variant="ghost"
+                            <IconButton onClick={onToggle} variant="ghost"
                                         color="gray.500"
                                         aria-label="Open side menu to filter by state"
                                         icon={FaBars}/>

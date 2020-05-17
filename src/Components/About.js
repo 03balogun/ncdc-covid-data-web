@@ -11,6 +11,7 @@ import {
 } from "@chakra-ui/core";
 
 import Text from "@chakra-ui/core/dist/Text";
+import Link from "@chakra-ui/core/dist/Link";
 
 const About = ({ isOpen, onClose }) => {
     return (
@@ -32,7 +33,15 @@ const About = ({ isOpen, onClose }) => {
                         <Text mb={4} fontSize={14} lineHeight="1.8rem">
                             The data can be filtered for each state in Nigeria, helping users understand the extent to which the numbers change from day to day, also showing the percentage difference from the previous day.
                         </Text>
-
+                        <Text as="p" color="grey.300" mb={2} fontSize={12}>Data source: <Link textDecoration="underline" isExternal
+                                                                                              href="https://ncdc.gov.ng/diseases/sitreps/?cat=14&name=An%20update%20of%20COVID-19%20outbreak%20in%20Nigeria">
+                            Nigeria Centre for Disease Control (NCDC)</Link>
+                        </Text>
+                        <Text fontSize={12}>
+                            Made with <span role="img" aria-label="Love">❤</span>️ by <Link textDecoration="underline" isExternal href="https://twitter.com/03balogun">Balogun
+                            Wahab</Link> &copy; 2020
+                            - <Link textDecoration="underline" isExternal href="https://github.com/03balogun/ncdc-covid-data-web">View source on github</Link>
+                        </Text>
                     </ModalBody>
 
                     <ModalFooter>
