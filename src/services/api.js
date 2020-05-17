@@ -6,7 +6,7 @@ export default {
     fetchMetricsGroupByDate: async (state = '') => {
         try {
             const uri = state && state !== 'All' ? `/epicurve-by-date?state=${state}` : `/epicurve-by-date`;
-            const {result: {data: records}} = (await axios.get(uri)).data;
+            const {data: records} = (await axios.get(uri)).data;
             const categories = records.map(record => record._id);
             const chartOneSeries = [
                 {
@@ -61,15 +61,16 @@ export default {
                 records,
                 chartTwoSeries
             }
-        }catch (e) {
+        } catch (e) {
             //
+            console.log(e);
         }
     },
     fetchSateMetrics: async () => {
         try {
-            const {result: {data: records}} = (await axios.get(`/epicurve-by-state`)).data;
-            return records;
-        }catch (e) {
+            const {data} = (await axios.get(`/epicurve-by-state`)).data;
+            return data;
+        } catch (e) {
             //
         }
     },
