@@ -4,11 +4,18 @@
     padding-right: 1.25rem;
 }
 
+.mobile-menu{
+    display: flex !important;;
+}
+
 .leftSection{
     max-width: 100% !important;
 }
 
 @media screen and (min-width: 40em) {
+    .mobile-menu{
+        display: none !important;
+    }
     .rightSection{
         max-width: 38%;
         display: block !important;

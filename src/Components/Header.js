@@ -55,9 +55,9 @@ const Header = ({onToggle}) => {
                                         aria-label="Switch to night mood"
                                         icon={colorMode === 'light' ? 'moon' : 'sun'}/>
                         </Tooltip>
-                        <Tooltip display={['flex', 'none']} aria-label="Open side menu to filter by state" placement="bottom"
+                        <Tooltip aria-label="Open side menu to filter by state" placement="bottom"
                                  label="Toggle Side menu">
-                            <IconButton onClick={onToggle} variant="ghost"
+                            <IconButton className="mobile-menu" onClick={onToggle} variant="ghost"
                                         color="gray.500"
                                         aria-label="Open side menu to filter by state"
                                         icon={FaBars}/>
