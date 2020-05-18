@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import ReactGA from 'react-ga';
 import ThemeProvider from "@chakra-ui/core/dist/ThemeProvider";
 import ColorModeProvider from "@chakra-ui/core/dist/ColorModeProvider";
 import CSSReset from "@chakra-ui/core/dist/CSSReset";
@@ -7,6 +8,10 @@ import StateContext from './context/StateContext'
 
 // pages
 import Index from './pages/Index';
+
+// ga
+ReactGA.initialize(process.env.REACT_GA_TRACKING_ID);
+ReactGA.pageview(window.location.pathname + window.location.search);
 
 function App() {
     const stateHook = useState('');
