@@ -31,14 +31,9 @@ import SideDrawer from "../../Components/SideDrawer";
 function Index() {
     const toast = useToast();
     const { colorMode } = useColorMode();
-    // TODO refactor this by using the chart's method to update options
-    if(colorMode === 'light'){
-        chart1.theme.mode = "light";
-        chart2.theme.mode = "light";
-    }else {
-        chart1.theme.mode = "dark";
-        chart2.theme.mode = "dark";
-    }
+
+    chart1.theme.mode = colorMode;
+    chart2.theme.mode = colorMode;
 
     const [isFetchingSeries, setIsFetchingSeries] = useState(true);
     const [chartOneSeries, setChartOneSeries] = useState([]);
