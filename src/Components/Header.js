@@ -11,7 +11,7 @@ import useDisclosure from "@chakra-ui/core/dist/useDisclosure";
 import About from "./About";
 
 
-const Header = ({onToggle}) => {
+const Header = ({toggleSideMenu}) => {
     const { colorMode, toggleColorMode } = useColorMode();
     const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -57,7 +57,7 @@ const Header = ({onToggle}) => {
                         </Tooltip>
                         <Tooltip aria-label="Open side menu to filter by state" placement="bottom"
                                  label="Toggle Side menu">
-                            <IconButton className="mobile-menu" onClick={onToggle} variant="ghost"
+                            <IconButton className="mobile-menu" onClick={toggleSideMenu} variant="ghost"
                                         color="gray.500"
                                         aria-label="Open side menu to filter by state"
                                         icon={FaBars}/>
@@ -71,7 +71,7 @@ const Header = ({onToggle}) => {
 };
 
 Header.propTypes = {
-    onToggle: PropTypes.func.isRequired
+    toggleSideMenu: PropTypes.func.isRequired
 };
 
 export default Header;

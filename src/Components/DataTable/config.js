@@ -1,4 +1,6 @@
+import React from 'react';
 import {createTheme} from "react-data-table-component";
+import { Link } from 'react-router-dom';
 
 export const columns = [
     {
@@ -8,8 +10,9 @@ export const columns = [
         wrap: true,
         maxWidth: '100px',
         style: {
-            textTransform: 'capitalize'
-        }
+            textTransform: 'capitalize',
+        },
+        cell: row => (<Link to={row.state}>{row.state}</Link>)
     },
     {
         name: 'Confirmed',

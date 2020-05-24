@@ -1,4 +1,4 @@
-import React, {useState, useMemo, useEffect, useContext} from "react";
+import React, {useState, useMemo, useEffect} from "react";
 import PropTypes from "prop-types";
 import DTable from 'react-data-table-component';
 import Spinner from "@chakra-ui/core/dist/Spinner";
@@ -9,27 +9,49 @@ import Input from "@chakra-ui/core/dist/Input";
 import {InputRightElement} from "@chakra-ui/core/dist";
 import IconButton from "@chakra-ui/core/dist/IconButton";
 import {useColorMode} from "@chakra-ui/core/dist/ColorModeProvider";
+import { useHistory, useParams } from "react-router-dom";
 
 import {columns, customStyles} from './config';
-
-import StateContext from '../../context/StateContext'
 
 import api from '../../services/api';
 
 import './index.css'
 
-const DataTable = ({onToggle}) => {
+const DataTable = ({toggleSideMenu}) => {
     const toast = useToast();
+
+
+    const history = useHistory();
+    const { state } = useParams();
+
+    // add selected row color based on the selected state
+    const conditionalRowStyles = [
+            {
+                when: row => row.state.toLowerCase() === state,
+                style: {
+                    backgroundColor: '#e3f2fd',
+                    color: 'rgba(0,0,0,0.87)',
+                    borderBottomColor: '#1a212c',
+                    '&:hover': {
+                        cursor: 'pointer'
+                    },
+                },
+            }
+        ];
+
+
+
     const [isLoading, setLoading] = useState(true);
     const [filterText, setFilterText] = useState('');
     const [resetPaginationToggle, setResetPaginationToggle] = useState(false);
 
-    const {1: setSelectedSate} = useContext(StateContext);
     const { colorMode } = useColorMode();
 
 
     const [records, setRecords] = useState([]);
-    const filteredItems = records.filter(item => item.state && item.state.toLowerCase().includes(filterText.toLowerCase()));
+    const filteredItems = records.filter(item => {
+        return item.state && item.state.toLowerCase().includes(filterText.toLowerCase())
+    });
 
     const subHeaderComponent = useMemo(() => {
         const handleClear = () => {
@@ -97,20 +119,22 @@ const DataTable = ({onToggle}) => {
             pointerOnHover={true}
             noHeader={true}
             onRowClicked={(args)=>{
-                setSelectedSate(args.state);
                 // close the side menu when a state is selected
-                if (onToggle) onToggle();
+                if (toggleSideMenu) toggleSideMenu();
+                const state = args.state.toLowerCase();
+                history.push(state);
             }}
             customStyles={customStyles}
             defaultSortField="total_confirmed_cases"
             defaultSortAsc={false}
             theme={colorMode !== 'light' ? 'solarized' : ''}
+            conditionalRowStyles={conditionalRowStyles}
         />
     )
 };
 
 DataTable.propTypes = {
-    onToggle: PropTypes.func,
+    toggleSideMenu: PropTypes.func,
 };
 
 export default DataTable;

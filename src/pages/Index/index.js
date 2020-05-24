@@ -1,12 +1,14 @@
-import React, {useEffect, useState, useContext} from 'react';
+import React, {useEffect, useState} from 'react';
 import useToast from "@chakra-ui/core/dist/es/Toast";
 import Flex from "@chakra-ui/core/dist/Flex";
 import Box from "@chakra-ui/core/dist/Box";
 import Text from "@chakra-ui/core/dist/Text";
 import Spinner from "@chakra-ui/core/dist/Spinner";
 import Skeleton from "@chakra-ui/core/dist/Skeleton";
+import ReactGA from "react-ga";
 import useDisclosure from "@chakra-ui/core/dist/useDisclosure";
 import {useColorMode} from "@chakra-ui/core/dist/ColorModeProvider";
+import { useParams } from "react-router-dom";
 
 import Tabs, { TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/core/dist/Tabs";
 
@@ -22,8 +24,6 @@ import chart2 from "../../config/chart2";
 
 import api from '../../services/api';
 import {formatDate} from '../../utils/helper';
-
-import StateContext from '../../context/StateContext'
 
 import './index.css';
 import SideDrawer from "../../Components/SideDrawer";
@@ -43,7 +43,10 @@ function Index() {
     const [latestReport, setLatestReport] = useState({});
     const [previousDayReport, setPreviousDayReport] = useState({});
 
-    const [selectedState] = useContext(StateContext);
+    const { state } = useParams();
+
+    if (state) ReactGA.pageview(window.location.pathname);
+
     const { isOpen, onToggle } = useDisclosure();
 
 
@@ -79,12 +82,12 @@ function Index() {
     };
 
     useEffect(() =>{
-        fetchChartSeries(selectedState);
-    }, [selectedState]);
+        fetchChartSeries(state);
+    }, [state]);
 
     return (
         <Box wrap="wrap">
-            <Header onToggle={onToggle} />
+            <Header toggleSideMenu={onToggle} />
             <Box
                  as="main"
                  mt="4rem"
@@ -114,7 +117,7 @@ function Index() {
                                 <Text fontSize={12}>
                                     Currently showing for
                                     <Text as="strong" textTransform="uppercase">
-                                        &nbsp;{selectedState || 'All'}
+                                        &nbsp;{state || 'All'}
                                     </Text>
                                     &nbsp;from <strong>{formatDate(firstReportDate)}</strong> to <strong>{formatDate(reportDate)}</strong>
                                 </Text>
