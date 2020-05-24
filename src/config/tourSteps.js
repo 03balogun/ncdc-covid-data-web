@@ -7,21 +7,36 @@ export default [
     {
         selector: '.night-mode-toggle',
         content: 'Use this button to switch between dark and light mode.',
+        style: {
+            color: '#4c4f59'
+        }
     },
     {
         selector: !isMobile ? '.datatable' : '.mobile-menu',
         content: !isMobile ? bigScreenContent : mobileScreenContent,
+        style: {
+            color: '#4c4f59'
+        }
     },
     {
         selector: '.stats',
         content: "This section shows the cumulative confirm, active, recovered and death cases overtime. This figures will be updated based on the selected state.",
+        style: {
+            color: '#4c4f59'
+        }
     },
     {
         selector: '.perday',
         content: "The line chart on this tab shows how the figures are changing each day since the first reported case. This figures will be updated based on the selected state.",
+        style: {
+            color: '#4c4f59'
+        }
     },
     {
         selector: '.cumulative',
         content: "This section shows the cumulative figure overtime. This figures will be updated based on the selected state.",
+        style: {
+            color: '#4c4f59'
+        }
     }
 ];
