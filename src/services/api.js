@@ -5,7 +5,7 @@ axios.defaults.baseURL = process.env.REACT_APP_BASE_URL;
 export default {
     fetchMetricsGroupByDate: async (state = '') => {
         try {
-            const uri = state && state !== 'All' ? `/epicurve-by-date?state=${state}` : `/epicurve-by-date`;
+            const uri = state && state.toLowerCase() !== 'all' ? `/epicurve-by-date?state=${state}` : `/epicurve-by-date`;
             const {data: records} = (await axios.get(uri)).data;
             const categories = records.map(record => record._id);
             const chartOneSeries = [

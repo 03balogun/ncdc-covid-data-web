@@ -25,9 +25,10 @@ const DataTable = ({toggleSideMenu}) => {
     const { state } = useParams();
 
     // add selected row color based on the selected state
+    const selectedState = state ?? 'all';
     const conditionalRowStyles = [
             {
-                when: row => row.state.toLowerCase() === state,
+                when: row => row.state.toLowerCase() === selectedState,
                 style: {
                     backgroundColor: '#e3f2fd',
                     color: 'rgba(0,0,0,0.87)',

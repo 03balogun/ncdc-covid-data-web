@@ -43,12 +43,11 @@ function Index() {
     const [latestReport, setLatestReport] = useState({});
     const [previousDayReport, setPreviousDayReport] = useState({});
 
-    const { state } = useParams();
+    const {state} = useParams();
 
     if (state) ReactGA.pageview(window.location.pathname);
 
-    const { isOpen, onToggle } = useDisclosure();
-
+    const {isOpen, onToggle} = useDisclosure();
 
     const fetchChartSeries = async (state = '') => {
         setIsFetchingSeries(true);
@@ -65,11 +64,11 @@ function Index() {
             const previousDayReport = records[1] ?? {};
 
             setReportDate(latestReport._id);
-            setFirstReportDate(records[records.length -1 ]._id);
+            setFirstReportDate(records[records.length - 1]._id);
             setLatestReport(latestReport);
             setPreviousDayReport(previousDayReport);
 
-        }catch (e) {
+        } catch (e) {
             toast({
                 title: "Error",
                 description: "An error occurred please refresh your page and try again. If error persist, kindly report.",
@@ -81,18 +80,18 @@ function Index() {
         setIsFetchingSeries(false);
     };
 
-    useEffect(() =>{
+    useEffect(() => {
         fetchChartSeries(state);
     }, [state]);
 
     return (
         <Box wrap="wrap">
-            <Header toggleSideMenu={onToggle} />
+            <Header toggleSideMenu={onToggle}/>
             <Box
-                 as="main"
-                 mt="4rem"
-                 width="100%"
-                 p={4}>
+                as="main"
+                mt="4rem"
+                width="100%"
+                p={4}>
                 <Box
                     position="fixed"
                     width="100%"
@@ -107,7 +106,7 @@ function Index() {
                         position="relative"
                         overflow-y="auto"
                         border-right-width="1px">
-                        <DataTable />
+                        <DataTable/>
                     </Box>
                 </Box>
                 <Box paddingTop="2rem" className="leftSection">
@@ -174,14 +173,14 @@ function Index() {
                         )}
                     </Flex>
                     <Flex display={['none', 'flex']} w="100%" justifySelf="flex-end">
-                        <Footer />
+                        <Footer/>
                     </Flex>
                 </Box>
             </Box>
             <Box display={['block', 'none']}>
-                <Footer />
+                <Footer/>
             </Box>
-            <SideDrawer isOpen={isOpen} onToggle={onToggle} />
+            <SideDrawer isOpen={isOpen} onToggle={onToggle}/>
         </Box>
     );
 }
