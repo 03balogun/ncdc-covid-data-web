@@ -63,7 +63,7 @@ const DataTable = ({toggleSideMenu}) => {
         };
 
         return (
-            <Box w="100%" p={0}>
+            <Box w="100%" p={[4, 0]}>
                 <label htmlFor="search">Filter by state:</label><br/>
                 <InputGroup w="100%" p={0}>
                     <Input id="search" type="text" placeholder="Filter By State" value={filterText} onChange={e => setFilterText(e.target.value)} />
@@ -122,9 +122,9 @@ const DataTable = ({toggleSideMenu}) => {
             noHeader={true}
             onRowClicked={(args)=>{
                 // close the side menu when a state is selected
-                if (toggleSideMenu) toggleSideMenu();
                 const state = args.state.toLowerCase();
                 history.push(state);
+                if (toggleSideMenu) toggleSideMenu();
             }}
             customStyles={customStyles}
             defaultSortField="total_confirmed_cases"

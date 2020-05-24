@@ -197,7 +197,7 @@ function Index() {
                 <Box display={['block', 'none']}>
                     <Footer/>
                 </Box>
-                <SideDrawer isOpen={isOpen} onToggle={onToggle}/>
+                <SideDrawer isOpen={isOpen} toggleSideMenu={onToggle}/>
             </Box>
             <Tour
                 steps={tourSteps}
