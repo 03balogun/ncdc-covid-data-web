@@ -98,6 +98,7 @@ const DataTable = ({toggleSideMenu}) => {
 
     return (
         <DTable
+            className={"datatable"}
             columns={columns}
             data={filteredItems}
             keyField="_id"
