@@ -14,7 +14,7 @@ See this repository for API and data source [NCDC COVID19 Data API](https://gith
 
 
 ### Built With
-- [React.js](https://reactjs.org) - A JavaScript library for buildingkdkd user interfaces.
+- [React.js](https://reactjs.org) - A JavaScript library for building user interfaces.
 
 - [Chakra UI](https://chakra-ui.com/) - Chakra UI is a simple, modular and accessible component library that gives you all the building blocks you need to build your React applications.
                                         
