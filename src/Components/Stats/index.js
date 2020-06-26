@@ -43,8 +43,8 @@ const Index = ({isFetchingSeries, latestReport, previousDayReport}) => {
             {
                 title: 'CONFIRMED CASES',
                 color: 'red.400',
-                figure: total_confirmed_cases.toLocaleString,
-                currentFigure: new_confirmed_cases?.toLocaleString ?? 0,
+                figure: parseInt(total_confirmed_cases).toLocaleString,
+                currentFigure: parseInt(new_confirmed_cases)?.toLocaleString ?? 0,
                 previousFigure: previousNewConfirmedCases,
                 isIncrease: new_confirmed_cases > previousNewConfirmedCases,
                 percentage: percentageDifference(new_confirmed_cases, previousNewConfirmedCases)
@@ -52,8 +52,8 @@ const Index = ({isFetchingSeries, latestReport, previousDayReport}) => {
             {
                 title: 'ACTIVE CASES',
                 color: 'orange.400',
-                figure: total_active_cases.toLocaleString(),
-                currentFigure: total_active_cases?.toLocaleString() ?? 0,
+                figure: parseInt(total_active_cases).toLocaleString(),
+                currentFigure: parseInt(total_active_cases)?.toLocaleString() ?? 0,
                 previousFigure: previousTotalActive,
                 isIncrease: total_active_cases > previousTotalActive,
                 percentage: percentageDifference(total_active_cases, previousTotalActive)
@@ -61,8 +61,8 @@ const Index = ({isFetchingSeries, latestReport, previousDayReport}) => {
             {
                 title: 'RECOVERED CASES',
                 color: 'green.400',
-                figure: total_discharged.toLocaleString,
-                currentFigure: new_discharged?.toLocaleString ?? 0,
+                figure: parseInt(total_discharged).toLocaleString,
+                currentFigure: parseInt(new_discharged)?.toLocaleString ?? 0,
                 previousFigure: previousNewDischarged,
                 isIncrease: new_discharged > previousNewDischarged,
                 percentage: percentageDifference(new_discharged, previousNewDischarged)
@@ -70,8 +70,8 @@ const Index = ({isFetchingSeries, latestReport, previousDayReport}) => {
             {
                 title: 'DEATH CASES',
                 color: 'blue.400',
-                figure: total_deaths.toLocaleString,
-                currentFigure: new_deaths?.toLocaleString ?? 0,
+                figure: parseInt(total_deaths).toLocaleString,
+                currentFigure: parseInt(new_deaths)?.toLocaleString ?? 0,
                 previousFigure: previousNewDeath,
                 isIncrease: new_deaths > previousNewDeath,
                 percentage: percentageDifference(new_deaths, previousNewDeath)
