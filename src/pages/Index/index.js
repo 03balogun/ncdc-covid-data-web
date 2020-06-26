@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, {useEffect, useState} from 'react';
 import useToast from "@chakra-ui/core/dist/es/Toast";
 import Flex from "@chakra-ui/core/dist/Flex";
@@ -29,7 +30,6 @@ import {formatDate} from '../../utils/helper';
 import './index.css';
 import SideDrawer from "../../Components/SideDrawer";
 import Tour from "reactour";
-import Button from "@chakra-ui/core/dist/Button";
 
 function Index() {
     const toast = useToast();

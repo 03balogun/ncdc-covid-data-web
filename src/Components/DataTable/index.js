@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, {useState, useMemo, useEffect} from "react";
 import PropTypes from "prop-types";
 import DTable from 'react-data-table-component';
