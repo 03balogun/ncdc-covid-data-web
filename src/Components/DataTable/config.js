@@ -21,7 +21,7 @@ export const columns = [
         maxWidth: '100px',
         center: true,
         compact: true,
-        cell: row => (parseInt(row.total_confirmed_cases).toLocaleString)
+        cell: row => (row.total_confirmed_cases.toLocaleString())
     },
     {
         name: 'Active',
@@ -30,7 +30,7 @@ export const columns = [
         maxWidth: '100px',
         center: true,
         compact: true,
-        cell: row => (parseInt(row.total_active_cases).toLocaleString)
+        cell: row => (row.total_active_cases.toLocaleString())
     },
     {
         name: 'Recovered',
@@ -39,7 +39,7 @@ export const columns = [
         maxWidth: '100px',
         center: true,
         compact: true,
-        cell: row => (parseInt(row.total_discharged).toLocaleString)
+        cell: row => (row.total_discharged.toLocaleString())
     },
     {
         name: 'Death',
@@ -48,7 +48,7 @@ export const columns = [
         maxWidth: '100px',
         center: true,
         compact: true,
-        cell: row => (parseInt(row.total_deaths).toLocaleString)
+        cell: row => (row.total_deaths.toLocaleString())
     },
 ];
 
