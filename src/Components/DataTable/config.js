@@ -20,7 +20,8 @@ export const columns = [
         sortable: true,
         maxWidth: '100px',
         center: true,
-        compact: true
+        compact: true,
+        cell: row => (row.total_confirmed_cases.toLocaleString)
     },
     {
         name: 'Active',
@@ -28,7 +29,8 @@ export const columns = [
         sortable: true,
         maxWidth: '100px',
         center: true,
-        compact: true
+        compact: true,
+        cell: row => (row.total_active_cases.toLocaleString)
     },
     {
         name: 'Recovered',
@@ -36,7 +38,8 @@ export const columns = [
         sortable: true,
         maxWidth: '100px',
         center: true,
-        compact: true
+        compact: true,
+        cell: row => (row.total_discharged.toLocaleString)
     },
     {
         name: 'Death',
@@ -44,7 +47,8 @@ export const columns = [
         sortable: true,
         maxWidth: '100px',
         center: true,
-        compact: true
+        compact: true,
+        cell: row => (row.total_deaths.toLocaleString)
     },
 ];
 
